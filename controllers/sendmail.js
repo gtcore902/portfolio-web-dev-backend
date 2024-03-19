@@ -4,7 +4,6 @@ exports.sendingMail = (req, res, next) => {
   const inputName = req.body.name;
   const inputEmail = req.body.email;
   const inputMessage = req.body.message;
-  //   console.log(inputName, inputEmail, inputMessage);
   let transporter = nodemailer.createTransport({
     service: 'Gmail',
     host: 'smtp.gmail.com',

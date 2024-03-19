@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-// let nodemailer = require('nodemailer');
 
 const mailRoutes = require('./routes/sendmail');
 require('dotenv').config();
