@@ -28,15 +28,31 @@ exports.sendingMail = (req, res, next) => {
       `,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log('An error occurred while sending the email.', error);
-      res
-        .status(500)
-        .json({ message: 'An error occurred while sending the email.' });
-    } else {
-      console.log('Email sent with success : ' + info.response);
-      res.status(200).json({ message: 'Sending email successfully!' });
+  function validateEmail(inputEmail) {
+    let regexEmail = new RegExp('[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+');
+    return regexEmail.test(inputEmail);
+  }
+  function validateName(inputName) {
+    if (inputName !== undefined) {
+      inputName = inputName.trim();
+      return inputName !== '';
     }
-  });
+  }
+  const send = () => {
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log('An error occurred while sending the email.', error);
+        res
+          .status(500)
+          .json({ message: 'An error occurred while sending the email.' });
+      } else {
+        console.log('Email sent with success : ' + info.response);
+        res.status(200).json({ message: 'Sending email successfully!' });
+      }
+    });
+  };
+
+  validateEmail(inputEmail) & validateName(inputName)
+    ? send()
+    : res.status(400).json({ message: 'Error with sent data' });
 };
