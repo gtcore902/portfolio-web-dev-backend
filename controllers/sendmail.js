@@ -1,9 +1,13 @@
 let nodemailer = require('nodemailer');
+const Handlebars = require('handlebars');
+let emailTemplate = require('../assets/emailTemplate');
 
 exports.sendingMail = (req, res, next) => {
   const inputName = req.body.name;
   const inputEmail = req.body.email;
   const inputMessage = req.body.message;
+  const template = Handlebars.compile(emailTemplate.toString());
+
   let transporter = nodemailer.createTransport({
     service: 'Gmail',
     host: 'smtp.gmail.com',
@@ -19,13 +23,11 @@ exports.sendingMail = (req, res, next) => {
     from: process.env.GOOGLE_MAIL_APP,
     to: process.env.GOOGLE_MAIL_APP,
     subject: 'New message from web dev portfolio',
-    // text: 'Alternative text',
-    html: `
-      <h1>New message from web dev portfolio</h1>
-      <p>Input name = ${inputName}</p>
-      <p>Input email = ${inputEmail}</p>
-      <p>Input message = ${inputMessage}</p>
-      `,
+    html: template({
+      inputName: inputName,
+      inputEmail: inputEmail,
+      inputMessage: inputMessage,
+    }),
   };
 
   function validateEmail(inputEmail) {
