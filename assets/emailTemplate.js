@@ -4,6 +4,7 @@ const emailTemplate = `
         <p>Nom : <br /> <span style="color: #E94D35;">{{inputName}}</span></p>
         <p>Email : <br /> <span style="color: #E94D35;">{{inputEmail}}</span></p>
         <p>Message : <br /> <span style="color: #E94D35;">{{inputMessage}}</span></p>
+        <p>RGPD : <br /> <span style="color: #E94D35;">{{inputRgpd}}</span></p>
     </div>
 `;
 module.exports = emailTemplate;

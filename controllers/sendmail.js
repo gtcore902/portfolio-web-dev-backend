@@ -6,6 +6,7 @@ exports.sendingMail = (req, res, next) => {
   const inputName = req.body.name;
   const inputEmail = req.body.email;
   const inputMessage = req.body.message;
+  const inputRgpd = req.body.checkbox;
   const template = Handlebars.compile(emailTemplate.toString());
 
   let transporter = nodemailer.createTransport({
@@ -27,6 +28,7 @@ exports.sendingMail = (req, res, next) => {
       inputName: inputName,
       inputEmail: inputEmail,
       inputMessage: inputMessage,
+      inputRgpd: inputRgpd,
     }),
   };
 
@@ -40,6 +42,10 @@ exports.sendingMail = (req, res, next) => {
       return inputName !== '';
     }
   }
+  function validateCheckedRgpd(inputRgpd) {
+    return inputRgpd;
+  }
+
   const send = () => {
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
@@ -54,7 +60,9 @@ exports.sendingMail = (req, res, next) => {
     });
   };
 
-  validateEmail(inputEmail) & validateName(inputName)
+  validateEmail(inputEmail) &
+  validateName(inputName) &
+  validateCheckedRgpd(inputRgpd)
     ? send()
     : res.status(400).json({ message: 'Error with sent data' });
 };
