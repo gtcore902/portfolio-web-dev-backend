@@ -42,6 +42,13 @@ exports.sendingMail = (req, res, next) => {
       return inputName !== '';
     }
   }
+  function validateMessage(inputMessage) {
+    if (inputMessage !== undefined) {
+      inputMessage = inputMessage.trim();
+      return inputMessage.length >= 5;
+    }
+  }
+
   function validateCheckedRgpd(inputRgpd) {
     return inputRgpd;
   }
@@ -62,6 +69,7 @@ exports.sendingMail = (req, res, next) => {
 
   validateEmail(inputEmail) &
   validateName(inputName) &
+  validateMessage(inputMessage) &
   validateCheckedRgpd(inputRgpd)
     ? send()
     : res.status(400).json({ message: 'Error with sent data' });
