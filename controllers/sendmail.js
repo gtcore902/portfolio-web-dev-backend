@@ -23,7 +23,7 @@ exports.sendingMail = (req, res, next) => {
   let mailOptions = {
     from: process.env.GOOGLE_MAIL_APP,
     to: process.env.GOOGLE_MAIL_APP,
-    subject: 'New message from web dev portfolio',
+    subject: 'Nouveau message depuis le portfolio gaetantremois',
     html: template({
       inputName: inputName,
       inputEmail: inputEmail,
